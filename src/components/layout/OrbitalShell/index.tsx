@@ -6,12 +6,12 @@ import { MetadataAnchor } from '../RegionAnchors/MetadataAnchor';
 
 interface OrbitalShellProps {
   /**
-   * The primary content rendered in the center stage.
+   * center stage content
    */
   children: React.ReactNode;
 
   /**
-   * Configuration for the Top-Left identity block.
+   * top-left identity config
    */
   identity: {
     title: string;
@@ -20,7 +20,7 @@ interface OrbitalShellProps {
   };
 
   /**
-   * Definition for the Left-Vertical navigation.
+   * left-vertical nav definition
    */
   navigation: {
     items: Array<{
@@ -33,12 +33,12 @@ interface OrbitalShellProps {
   };
 
   /**
-   * Content for the Bottom-Right anchor.
+   * bottom-right anchor content
    */
   auxiliaryContent?: React.ReactNode;
 
   /**
-   * Content for the Bottom-Left anchor.
+   * bottom-left anchor content
    */
   systemControls?: React.ReactNode;
 }
@@ -54,7 +54,7 @@ export const OrbitalShell: React.FC<OrbitalShellProps> = ({
 
   return (
     <div className="relative h-screen w-screen bg-transparent text-white overflow-hidden p-4 md:p-[var(--safe-area-spacing)]">
-      {/* Mobile Header */}
+      {/* mobile header */}
       <div className="md:hidden flex justify-between items-start mb-4 z-50 relative">
         <IdentityAnchor
           title={identity.title}
@@ -70,7 +70,7 @@ export const OrbitalShell: React.FC<OrbitalShellProps> = ({
         </button>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* mobile drawer */}
       {isMobileMenuOpen && (
         <div className="absolute inset-0 z-40 bg-[#181818] p-8 flex flex-col pt-24 space-y-8 md:hidden">
            <NavAnchor
@@ -86,15 +86,10 @@ export const OrbitalShell: React.FC<OrbitalShellProps> = ({
         </div>
       )}
 
-      {/* 
-        Desktop Grid Layout strictly defined:
-        Grid Template:
-        grid-template-columns: minmax(200px, 15%) 1fr minmax(200px, 15%);
-        grid-template-rows: auto 1fr auto;
-      */}
+      {/* desktop grid layout definition */}
       <div className="flex flex-col md:grid h-full w-full md:grid-cols-[minmax(200px,15%)_1fr_minmax(200px,15%)] md:grid-rows-[auto_1fr_auto] gap-x-8">
         
-        {/* Region A: Top-Left Identity (Desktop Only - Mobile handled above) */}
+        {/* region a: top-left identity (desktop only) */}
         <header className="hidden md:block col-start-1 row-start-1 z-50">
           <IdentityAnchor
             title={identity.title}
@@ -103,7 +98,7 @@ export const OrbitalShell: React.FC<OrbitalShellProps> = ({
           />
         </header>
 
-        {/* Region B: Mid-Left Navigation (Desktop Only) */}
+        {/* region b: mid-left nav (desktop only) */}
         <div className="hidden md:block col-start-1 row-start-2 pt-[10vh] z-50">
           <NavAnchor
             items={navigation.items}
@@ -111,14 +106,14 @@ export const OrbitalShell: React.FC<OrbitalShellProps> = ({
           />
         </div>
 
-        {/* Region C: Bottom-Left System Controls (Desktop Only) */}
+        {/* region c: bottom-left controls (desktop only) */}
         <div className="hidden md:block col-start-1 row-start-3 self-end z-50">
             <SystemControls>
                 {systemControls}
             </SystemControls>
         </div>
 
-        {/* Region E: Central Stage */}
+        {/* region e: central stage */}
         <main className={`flex-1 overflow-y-auto z-0 relative md:px-8 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-700
           ${isMobileMenuOpen ? 'hidden md:block' : 'block'}
           col-start-2 col-end-3 row-start-1 row-end-4`
@@ -126,7 +121,7 @@ export const OrbitalShell: React.FC<OrbitalShellProps> = ({
            {children}
         </main>
 
-        {/* Region D: Bottom-Right Contextual Metadata (Desktop Only) */}
+        {/* region d: bottom-right metadata (desktop only) */}
         <div className="hidden md:block col-start-3 row-start-3 self-end justify-self-end z-50">
           <MetadataAnchor>
             {auxiliaryContent}

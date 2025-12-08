@@ -9,7 +9,7 @@ export default function SkillsPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Category 1: Frontend */}
+            {/* category 1: frontend */}
             <div className="space-y-4">
                 <h3 className="text-sm font-medium text-white/40 uppercase tracking-widest">Frontend</h3>
                 <div className="flex flex-wrap gap-2">
@@ -21,7 +21,7 @@ export default function SkillsPage() {
                 </div>
             </div>
 
-            {/* Category 2: Backend */}
+            {/* category 2: backend */}
              <div className="space-y-4">
                 <h3 className="text-sm font-medium text-white/40 uppercase tracking-widest">Backend</h3>
                 <div className="flex flex-wrap gap-2">
@@ -33,7 +33,7 @@ export default function SkillsPage() {
                 </div>
             </div>
             
-             {/* Category 3: Mobile/Other */}
+             {/* category 3: mobile & tools */}
              <div className="space-y-4">
                 <h3 className="text-sm font-medium text-white/40 uppercase tracking-widest">Mobile & Tools</h3>
                 <div className="flex flex-wrap gap-2">

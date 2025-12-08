@@ -10,7 +10,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   const pathname = usePathname();
   const [liveMode, setLiveMode] = useState(true);
 
-  // Derive active section from pathname
+  // derive active section from pathname
   // e.g. "/projects" -> "projects", "/" -> null
   const activeSection = pathname === '/' ? null : pathname.replace('/', '');
 

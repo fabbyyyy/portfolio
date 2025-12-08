@@ -5,45 +5,45 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useGLTF, Environment, Float } from '@react-three/drei';
 import * as THREE from 'three';
 
-// Define props
+// props
 interface Scene3DProps {
   activeSection: string | null;
 }
 
 function Model({ mouse, active }: { mouse: React.MutableRefObject<[number, number]>, active: boolean }) {
-  // Load the model from the public directory
-  const { scene } = useGLTF('/models/f1.glb');
+  // load f1 model
+  const { scene } = useGLTF('/models/f1_final.glb');
   const groupRef = useRef<THREE.Group>(null);
   
-  // Target values for smooth transition
+  // smooth transition targets
   const targetPos = useRef(new THREE.Vector3(0, 0, 0));
   const targetRot = useRef(new THREE.Euler(0, 0, 0));
 
   useFrame((state, delta) => {
     if (groupRef.current) {
         if (active) {
-            // content view: Move to bottom right (adjust these values based on 15x scale)
-            // Scale 15 is huge, so position units need to be relatively small or camera far away.
+            // content view: move to bottom right
+            // scale is huge, keep pos units small
             targetPos.current.set(3, -1.5, 0); 
-            targetRot.current.set(0, -Math.PI / 2, 0); // Profile view
+            targetRot.current.set(0, -Math.PI / 2, 0); // profile view
         } else {
-            // Home view: Offset to the right (X=1.5)
+            // home view: offset to the right
             targetPos.current.set(1.5, 0, 0);
             
-            // Mouse Parallax Logic
-            // Clamp Y so moving mouse down (negative values) doesn't affect rotation
+            // mouse parallax
+            // clamp y so looking down doesn't rotate model
             const mouseX = mouse.current[0] * 0.5;
-            const mouseY = Math.max(0, mouse.current[1] * 0.5); // Only allow looking up/neutral
+            const mouseY = Math.max(0, mouse.current[1] * 0.5); // only look up/neutral
 
-            // Default rotation offset: slightly turned (Y -0.5) to look like 3/4 view
+            // default rot: 3/4 view
             targetRot.current.set(mouseY, mouseX - 0.5, 0);
         }
 
-      // Lerp Position
+      // lerp position
       groupRef.current.position.lerp(targetPos.current, delta * 2);
       
-      // Lerp Rotation (using distinct axis for clarity, or quaternion slerp for perfection but Euler lerp is fine here)
-      // We manually lerp Euler values to avoid gimbal lock issues with simple lerps if we were doing full 360, but restricted range is fine.
+      // lerp rotation
+      // manual euler lerp strict range avoids gimbal lock
       groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetRot.current.x, delta * 2);
       groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetRot.current.y, delta * 2);
       groupRef.current.rotation.z = THREE.MathUtils.lerp(groupRef.current.rotation.z, targetRot.current.z, delta * 2);
@@ -52,7 +52,7 @@ function Model({ mouse, active }: { mouse: React.MutableRefObject<[number, numbe
 
   return (
     <group ref={groupRef} dispose={null}>
-      {/* Center and scale model appropriately */}
+      {/* center and scale model */}
       <primitive object={scene} scale={90} position={[0, 0, 0]} />
     </group>
   );
@@ -62,7 +62,7 @@ export default function Scene3D({ activeSection }: Scene3DProps) {
   const mouse = useRef<[number, number]>([0, 0]);
 
   const handleMouseMove = (event: React.MouseEvent) => {
-    // Normalize mouse coordinates to -1 to 1
+    // normalize changes
     const x = (event.clientX / window.innerWidth) * 2 - 1;
     const y = -(event.clientY / window.innerHeight) * 2 + 1;
     mouse.current = [x, y];
@@ -77,20 +77,20 @@ export default function Scene3D({ activeSection }: Scene3DProps) {
       <Canvas 
         camera={{ position: [0, 0, 5], fov: 45 }}
         gl={{ alpha: true, antialias: true }}
-        dpr={[1, 2]} // Handle high DPI screens
+        dpr={[1, 2]} // handle high dpi
       >
         <Suspense fallback={null}>
-            {/* Lighting setup to match the dark aesthetic */}
+            {/* dark aesthetic lighting */}
             <ambientLight intensity={0.5} />
             <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} />
             <pointLight position={[-10, -10, -10]} intensity={1} />
             
-            {/* Environment for reflections if model has metallic parts */}
+            {/* environment reflections */}
             <Environment preset="city" />
 
-            {/* Float only active when NOT activeSection? No, keeping float is nice, or maybe remove it for 'status' profile view? */ }
+            {/* float active when not active section */}
             <Float 
-                speed={activeSection ? 0 : 2} // Stop floating when locked in profile
+                speed={activeSection ? 0 : 2} // stop floating when locked in profile
                 rotationIntensity={activeSection ? 0 : 0.5} 
                 floatIntensity={activeSection ? 0 : 0.5}
             >
@@ -102,10 +102,9 @@ export default function Scene3D({ activeSection }: Scene3DProps) {
   );
 }
 
-// Helper to track mouse globally since the div is behind content
+// global mouse tracker
 function MouseTracker({ mouse }: { mouse: React.MutableRefObject<[number, number]> }) {
-    // We can't really use useThree for DOM events easily unless we are inside Canvas, which we are.
-    // But we want window events.
+    // window event listener for mouse
     React.useEffect(() => {
         const updateMouse = (e: MouseEvent) => {
             const x = (e.clientX / window.innerWidth) * 2 - 1;

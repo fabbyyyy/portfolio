@@ -9,7 +9,7 @@ export default function ProjectsPage() {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-           {/* Project Card 1 */}
+           {/* project card 1 */}
            <div className="group relative aspect-video bg-white/[0.02] border border-white/5 rounded-lg overflow-hidden cursor-pointer hover:bg-white/[0.05] transition-colors">
               <div className="absolute inset-0 p-6 flex flex-col justify-end">
                  <div className="transform transition-transform duration-500 group-hover:-translate-y-2">
@@ -24,7 +24,7 @@ export default function ProjectsPage() {
               </div>
            </div>
 
-           {/* Project Card 2 */}
+           {/* project card 2 */}
            <div className="group relative aspect-video bg-white/[0.02] border border-white/5 rounded-lg overflow-hidden cursor-pointer hover:bg-white/[0.05] transition-colors">
               <div className="absolute inset-0 p-6 flex flex-col justify-end">
                  <div className="transform transition-transform duration-500 group-hover:-translate-y-2">

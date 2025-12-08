@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 import MainLayout from "@/components/layout/MainLayout";
 
 export const metadata: Metadata = {
-  title: "Fabian Garza | Portfolio",
+  title: "Fabian Garza",
   description: "Creative Fullstack & Swift Developer",
 };
 
