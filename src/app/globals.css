@@ -38,7 +38,12 @@ body {
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
+/* Hide scrollbar for IE, Edge and Firefox */
 html, body {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+  overflow: hidden; /* Lock global scroll */
+  height: 100%; /* Full height */
+  margin: 0;
+  overscroll-behavior: none; /* Prevent bounce */
 }

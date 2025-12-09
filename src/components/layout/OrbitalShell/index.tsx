@@ -114,7 +114,7 @@ export const OrbitalShell: React.FC<OrbitalShellProps> = ({
         </div>
 
         {/* region e: central stage */}
-        <main className={`flex-1 overflow-y-auto z-0 relative md:px-8 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-700
+        <main className={`flex-1 overflow-y-auto overflow-x-hidden z-0 relative md:px-8 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-700
           ${isMobileMenuOpen ? 'hidden md:block' : 'block'}
           col-start-2 col-end-3 row-start-1 row-end-4`
         }>
