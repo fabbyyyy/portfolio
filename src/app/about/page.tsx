@@ -1,12 +1,9 @@
-'use client';
+import { PageHeader } from '@/components/ui/PageHeader';
 
 export default function AboutPage() {
   return (
     <section className="space-y-6 animate-in slide-in-from-bottom-4 duration-500 max-w-2xl">
-        <div className="flex items-center justify-between border-b border-white/10 pb-4">
-           <h2 className="text-xl font-light tracking-wide text-white/80">About Me</h2>
-           <span className="text-xs text-white/40 font-mono">03 / 04</span>
-        </div>
+        <PageHeader title="About Me" subtitle="03 / 04" />
 
         <h1 className="text-4xl md:text-5xl font-light text-white tracking-tight mb-8">
           Problem solver. <br />

@@ -1,28 +1,47 @@
 'use client';
 
+import { PageHeader } from '@/components/ui/PageHeader';
+
 export default function ContactPage() {
   return (
-    <section className="space-y-6 h-full flex flex-col animate-in slide-in-from-bottom-4 duration-500">
-        <div className="flex items-center justify-between border-b border-white/10 pb-4">
-           <h2 className="text-xl font-light tracking-wide text-white/80">Get in Touch</h2>
-           <span className="text-xs text-white/40 font-mono">04 / 04</span>
-        </div>
-        
-        <div className="flex flex-col space-y-8 pt-8">
-             <div className="space-y-2">
-                <h3 className="text-sm font-medium text-white/40 uppercase tracking-widest">Email</h3>
+    <section className="space-y-6 animate-in slide-in-from-bottom-4 duration-500 max-w-2xl">
+        <PageHeader title="Contact" subtitle="04 / 04" />
+
+        <div className="space-y-12">
+            <div className="space-y-4">
+                <p className="text-xl text-white/60 font-light leading-relaxed">
+                    I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.
+                </p>
                 <a 
-                    href="mailto:fabiangarzamx@gmail.com" 
-                    className="text-2xl md:text-3xl font-light text-white hover:text-white/80 transition-colors block"
+                    href="mailto:hello@fabiangarza.com" 
+                    className="inline-block text-3xl md:text-5xl text-white font-light hover:text-green-400 transition-colors tracking-tight"
                 >
-                    fabiangarzamx@gmail.com
+                    hello@fabiangarza.com
                 </a>
-             </div>
-             
-             <div className="space-y-2">
-                <h3 className="text-sm font-medium text-white/40 uppercase tracking-widest">Location</h3>
-                <p className="text-xl font-light text-white/80">Monterrey, Mexico</p>
-             </div>
+            </div>
+
+            <div className="space-y-4">
+                 <h3 className="text-sm font-medium text-white/40 uppercase tracking-widest border-b border-white/10 pb-2">Socials</h3>
+                 <div className="flex flex-col gap-4">
+                    {[
+                        { label: 'GitHub', href: 'https://github.com', handle: '@fabiangarza' },
+                        { label: 'Twitter', href: 'https://twitter.com', handle: '@fabiangarza' },
+                        { label: 'LinkedIn', href: 'https://linkedin.com', handle: 'Fabian Garza' },
+                        { label: 'All My Links', href: 'https://allmylinks.com', handle: 'Fabian Garza' }
+                    ].map(link => (
+                        <a 
+                            key={link.label}
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer" 
+                            className="group flex items-center justify-between py-2 border-b border-white/5 hover:border-white/20 transition-colors"
+                        >
+                            <span className="text-lg text-white/80 group-hover:text-white transition-colors">{link.label}</span>
+                            <span className="text-sm text-white/40 font-mono group-hover:text-green-400 transition-colors">{link.handle}</span>
+                        </a>
+                    ))}
+                 </div>
+            </div>
         </div>
     </section>
   );
