@@ -13,10 +13,10 @@ export default function ContactPage() {
                     I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.
                 </p>
                 <a 
-                    href="mailto:hello@fabiangarza.com" 
+                    href="mailto:fabiangarzamx@gmail.com" 
                     className="inline-block text-3xl md:text-5xl text-white font-light hover:text-green-400 transition-colors tracking-tight"
                 >
-                    hello@fabiangarza.com
+                    fabiangarzamx@gmail.com
                 </a>
             </div>
 
@@ -24,19 +24,39 @@ export default function ContactPage() {
                  <h3 className="text-sm font-medium text-white/40 uppercase tracking-widest border-b border-white/10 pb-2">Socials</h3>
                  <div className="flex flex-col gap-4">
                     {[
-                        { label: 'GitHub', href: 'https://github.com', handle: '@fabiangarza' },
-                        { label: 'Twitter', href: 'https://twitter.com', handle: '@fabiangarza' },
-                        { label: 'LinkedIn', href: 'https://linkedin.com', handle: 'Fabian Garza' },
-                        { label: 'All My Links', href: 'https://allmylinks.com', handle: 'Fabian Garza' }
+                        { 
+                            id: 'github',
+                            href: 'https://github.com/fabbyyyy', 
+                            handle: '@fabbyyyy',
+                            icon: '/svgs/socials/github-mark-white.svg'
+                        },
+                        { 
+                            id: 'twitter',
+                            href: 'https://twitter.com/fabiangarzag', 
+                            handle: '@fabiangarzag',
+                            icon: '/svgs/socials/x-white.svg'
+                        },
+                        { 
+                            id: 'linkedin',
+                            href: 'https://linkedin.com/in/fabiangarzag', 
+                            handle: 'Fabian Garza',
+                            icon: '/svgs/socials/InBug-White.png'
+                        }
                     ].map(link => (
                         <a 
-                            key={link.label}
+                            key={link.id}
                             href={link.href}
                             target="_blank"
                             rel="noopener noreferrer" 
                             className="group flex items-center justify-between py-2 border-b border-white/5 hover:border-white/20 transition-colors"
                         >
-                            <span className="text-lg text-white/80 group-hover:text-white transition-colors">{link.label}</span>
+                            <span className="relative w-6 h-6 opacity-80 group-hover:opacity-100 transition-opacity">
+                                <img 
+                                    src={link.icon} 
+                                    alt={link.id}
+                                    className="w-full h-full object-contain"
+                                />
+                            </span>
                             <span className="text-sm text-white/40 font-mono group-hover:text-green-400 transition-colors">{link.handle}</span>
                         </a>
                     ))}
