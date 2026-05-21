@@ -5,6 +5,7 @@ export type WorkProject = {
   title: string;
   subtitle: string;
   fullDetails?: string;
+  website?: string;
 };
 
 export const WORK_PROJECTS: WorkProject[] = [
@@ -30,6 +31,7 @@ export const WORK_PROJECTS: WorkProject[] = [
     imageAlt: "Vantage",
     title: "Vantage",
     subtitle: "ui/ux design, brand design, web development",
-    fullDetails: "Vantage is a Next.js-powered digital agency focused on elevating brands through high-performance web development, reliable hosting, and strategic website redesigns. Operating primarily in Spanish, Vantage positions itself as a partner that builds \"digital salespeople\"—modern, conversion-optimized platforms designed to work 24/7. The agency offers comprehensive solutions ranging from immediate, professional landing pages to fully custom, complex platforms, ensuring businesses of all sizes have a premium, secure, and fast online presence."
+    fullDetails: "Vantage is a digital agency focused on elevating brands through high-performance web development, reliable hosting, and strategic website redesigns. They are a partner that builds \"digital salespeople\" modern, conversion-optimized platforms designed to work 24/7.",
+    website: "https://byvantage.mx"
   }
 ];

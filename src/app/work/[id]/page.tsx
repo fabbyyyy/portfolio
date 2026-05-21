@@ -136,16 +136,37 @@ export default function WorkDetailsPage({ params }: PageProps) {
                   transition={{ duration: duration(0.95), delay: 0.1, ease: easeOut }}
                   className="relative aspect-[16/10] w-full overflow-hidden bg-black/[0.04] shadow-sm md:w-[55%] shrink-0"
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element -- premium asset */}
-                  <img
-                    src={project.image}
-                    alt={project.imageAlt}
-                    className="h-full w-full object-cover"
-                    draggable={false}
-                    style={{
-                      viewTransitionName: `project-image-${project.id}`
-                    } as React.CSSProperties & { viewTransitionName?: string }}
-                  />
+                  {project.website ? (
+                    <a
+                      href={project.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group/img block h-full w-full relative overflow-hidden bg-black"
+                      title="Visit published website"
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element -- premium asset */}
+                      <img
+                        src={project.image}
+                        alt={project.imageAlt}
+                        className="h-full w-full object-cover transition-opacity duration-300 group-hover/img:opacity-80"
+                        draggable={false}
+                        style={{
+                          viewTransitionName: `project-image-${project.id}`
+                        } as React.CSSProperties & { viewTransitionName?: string }}
+                      />
+                    </a>
+                  ) : (
+                    /* eslint-disable-next-line @next/next/no-img-element -- premium asset */
+                    <img
+                      src={project.image}
+                      alt={project.imageAlt}
+                      className="h-full w-full object-cover"
+                      draggable={false}
+                      style={{
+                        viewTransitionName: `project-image-${project.id}`
+                      } as React.CSSProperties & { viewTransitionName?: string }}
+                    />
+                  )}
                 </motion.div>
 
                 {/* Text & Content Block */}
@@ -190,7 +211,7 @@ export default function WorkDetailsPage({ params }: PageProps) {
                       <h4 className="text-xs font-bold uppercase tracking-wider text-black/45">
                         About the project
                       </h4>
-                      <p className="text-lg leading-relaxed text-black/80 sm:text-xl font-normal">
+                      <p className="text-lg leading-relaxed text-black/80 sm:text-xl font-normal whitespace-pre-line">
                         {project.fullDetails}
                       </p>
                     </motion.div>
