@@ -27,7 +27,7 @@ export default function WorkDetailsPage({ params }: PageProps) {
   const { id } = use(params);
   const router = useRouter();
   const reduceMotion = useReducedMotion();
-  
+
   // Resolve the page transition promise on mount
   useEffect(() => {
     if (typeof window !== "undefined" && (window as unknown as { __pageTransitionResolve?: () => void }).__pageTransitionResolve) {
@@ -67,7 +67,7 @@ export default function WorkDetailsPage({ params }: PageProps) {
       {/* Dynamic details local scroll container */}
       <main className="relative z-[1] h-full min-h-0 w-full overflow-x-hidden overflow-y-auto overscroll-y-contain scroll-smooth px-[29px] pb-24 pt-[max(1.25rem,env(safe-area-inset-top))]">
         <div className="mx-auto max-w-[1200px] pt-12 sm:pt-20">
-          
+
           {/* Back Button with Micro-Animation */}
           <motion.div
             initial={{ opacity: 0, x: -8 }}
@@ -123,12 +123,11 @@ export default function WorkDetailsPage({ params }: PageProps) {
           {(() => {
             const projectIndex = WORK_PROJECTS.findIndex((p) => p.id === id);
             const isEven = projectIndex % 2 === 0;
-            
+
             return (
               <div
-                className={`flex flex-col gap-8 md:flex-row md:items-start md:gap-16 ${
-                  isEven ? "" : "md:flex-row-reverse"
-                }`}
+                className={`flex flex-col gap-8 md:flex-row md:items-start md:gap-16 ${isEven ? "" : "md:flex-row-reverse"
+                  }`}
               >
                 {/* Project Image: 55% width on desktop */}
                 <motion.div
@@ -151,7 +150,7 @@ export default function WorkDetailsPage({ params }: PageProps) {
 
                 {/* Text & Content Block */}
                 <div className="min-w-0 flex-1">
-                  
+
                   {/* Title Block */}
                   <div className="mb-8">
                     <motion.h1
@@ -179,7 +178,7 @@ export default function WorkDetailsPage({ params }: PageProps) {
 
                   {/* Details / Split Metadata Grid */}
                   <div className="border-t border-black/10 pt-8 flex flex-col gap-8">
-                    
+
                     {/* Description block */}
                     <motion.div
                       initial={{ opacity: 0, y: 12 }}
@@ -192,10 +191,10 @@ export default function WorkDetailsPage({ params }: PageProps) {
                         About the project
                       </h4>
                       <p className="text-lg leading-relaxed text-black/80 sm:text-xl font-normal">
-                        {project.fullDetails || project.description}
+                        {project.fullDetails}
                       </p>
                     </motion.div>
-                    
+
                   </div>
                 </div>
               </div>
