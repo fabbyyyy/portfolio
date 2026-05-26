@@ -43,7 +43,7 @@ const SOCIAL_STROKE_ASSETS: Record<
 };
 
 const HERO_BIO =
-  "i am a developer based in Mexico, currently studying at Tecnológico de Monterrey. I love art, music and automobiles.";
+  "I am a developer based in Mexico, currently studying at Tecnológico de Monterrey. I love art, music and automobiles.";
 
 /** Matches Figma hero: Fraunces SemiBold + SOFT/WONK axes */
 const frauncesDisplay = {
@@ -379,9 +379,11 @@ export default function Home() {
                 className={`mt-8 ${sectionBodyClass}`}
                 style={sectionBodySatoshi}
               >
-                i use my passion and skills to create digital experiences, i love building thoughtful, and
-                high quality software that connects with people. currently
-                studying at tecnológico de monterrey, i love art, cars and music, but cover your ears if i start singing.
+                I build software and interfaces I&apos;d actually want to open, and I&apos;m a little obsessive about the details. I&apos;m at
+                Tecnológico de Monterrey in Mexico, where art, cars, and music keep
+                me honest about craft. If the problem is worth solving, I&apos;ll go
+                deep until it feels right. Fair warning: my singing is still a work
+                in progress.
               </p>
             </div>
 
@@ -538,7 +540,7 @@ export default function Home() {
                   {
                     id: "instagram" as const,
                     label: "instagram",
-                    href: "https://instagram.com/fabbyyyy",
+                    href: "https://www.instagram.com/fabian.garzag/",
                   },
                 ] as const
               ).map(({ id, label, href }) => (
