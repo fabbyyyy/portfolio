@@ -262,7 +262,7 @@ export default function Home() {
               >
                 {index > 0 ? (
                   <span
-                    className="select-none text-[11px] leading-none text-black/35 sm:hidden"
+                    className="select-none text-base leading-none text-black/35 sm:hidden"
                     aria-hidden
                   >
                     ,
@@ -272,7 +272,7 @@ export default function Home() {
                   href="/"
                   scroll={false}
                   aria-current={isActive ? "page" : undefined}
-                  className="relative inline-block px-0.5 py-1 font-medium lowercase text-[11px] text-black sm:text-xl sm:text-2xl"
+                  className="relative inline-block px-0.5 py-1 font-medium lowercase text-base text-black sm:text-xl sm:text-2xl"
                   style={{ fontFamily: "var(--font-satoshi), sans-serif" }}
                   onClick={(e) => {
                     e.preventDefault();
@@ -297,7 +297,13 @@ export default function Home() {
         ref={mainRef}
         className="relative z-[1] h-full min-h-0 w-full scroll-pt-[max(5.5rem,calc(env(safe-area-inset-top)+4.5rem))] overflow-x-hidden overflow-y-auto overscroll-y-contain scroll-smooth"
       >
-        <ScrollFadeHeroBg scrollRootRef={mainRef} />
+        <div
+          className="pointer-events-none fixed inset-0 z-0 bg-[#C2DDD8] md:hidden"
+          aria-hidden
+        />
+        <div className="max-md:hidden">
+          <ScrollFadeHeroBg scrollRootRef={mainRef} />
+        </div>
         <section
           id="hero"
           aria-label="Intro"
@@ -309,15 +315,16 @@ export default function Home() {
             initial="hidden"
             animate="visible"
           >
+            {/* Tablet / desktop — bio top, titles bottom-right */}
             <motion.p
-              className={`absolute left-[29px] right-[29px] top-[max(6.25rem,calc(env(safe-area-inset-top)+5.25rem))] z-10 text-pretty text-left ${sectionBodyClass}`}
+              className={`absolute left-[29px] right-[29px] top-[max(6.25rem,calc(env(safe-area-inset-top)+5.25rem))] z-10 hidden text-pretty text-left sm:block ${sectionBodyClass}`}
               style={sectionBodySatoshi}
               variants={heroLineVariants}
             >
               {HERO_BIO}
             </motion.p>
             <motion.div
-              className="absolute bottom-0 left-0 right-0 box-border flex flex-col items-end pr-[29px] pl-[29px] pb-[max(env(safe-area-inset-bottom,0px),min(32px,max(0.625rem,3vh)))] pt-40"
+              className="absolute bottom-0 left-0 right-0 box-border hidden flex-col items-end pr-[29px] pl-[29px] pb-[max(env(safe-area-inset-bottom,0px),min(32px,max(0.625rem,3vh)))] pt-40 sm:flex"
               variants={heroContainerVariants}
             >
               <motion.p
@@ -358,6 +365,73 @@ export default function Home() {
                 </motion.span>
               </h1>
             </motion.div>
+
+            {/* Mobile only — titles left / upper; bio + CTA trailing right */}
+            <motion.div
+              className="absolute inset-x-[29px] top-[30%] flex max-w-full flex-col sm:hidden"
+              variants={heroContainerVariants}
+            >
+              <div className="flex w-full flex-col items-start text-left">
+                <motion.p
+                  className={`${frauncesItalic.className} mb-2.5 text-left text-black`}
+                  style={{
+                    fontSize: "clamp(1.6rem,6.5vw,2.25rem)",
+                    letterSpacing: "-0.02em",
+                    fontWeight: 500,
+                    fontVariationSettings: "'SOFT' 0, 'WONK' 1",
+                    fontSynthesis: "none",
+                  }}
+                  variants={heroLineVariants}
+                >
+                  available for work
+                </motion.p>
+                <h1 className="contents">
+                  <motion.span
+                    className="relative block w-fit max-w-full font-semibold uppercase leading-[0.92] text-black"
+                    style={{
+                      ...frauncesDisplay,
+                      fontSize: "clamp(2.85rem,14.5vw,4.25rem)",
+                      letterSpacing: "-1%",
+                    }}
+                    variants={heroLineVariants}
+                  >
+                    Developer
+                  </motion.span>
+                  <motion.span
+                    className="relative -mt-[0.06em] block w-fit max-w-full font-semibold uppercase leading-[0.92] text-black"
+                    style={{
+                      ...frauncesDisplay,
+                      fontSize: "clamp(2.85rem,14.5vw,4.25rem)",
+                      letterSpacing: "-3%",
+                    }}
+                    variants={heroLineVariants}
+                  >
+                    &{"\u00A0"}Designer
+                  </motion.span>
+                </h1>
+              </div>
+              <div className="mt-14 flex w-full flex-col items-end text-right">
+                <motion.p
+                  className={`max-w-[min(100%,22rem)] text-pretty text-right ${sectionBodyClass}`}
+                  style={sectionBodySatoshi}
+                  variants={heroLineVariants}
+                >
+                  {HERO_BIO}
+                </motion.p>
+                <motion.button
+                  type="button"
+                  className="pointer-events-auto mt-10 rounded-sm px-0.5 py-1 font-semibold uppercase tracking-normal text-black outline-offset-4 transition-opacity hover:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-black/35"
+                  style={{
+                    ...frauncesDisplay,
+                    fontSize: "clamp(1.5rem,6vw,2rem)",
+                  }}
+                  variants={heroLineVariants}
+                  onClick={() => scrollTo("contact")}
+                >
+                  Contact Me
+                </motion.button>
+              </div>
+            </motion.div>
           </motion.div>
         </section>
 
@@ -387,12 +461,12 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Right — Monarch image */}
-            <div className="relative flex flex-1 items-end justify-center md:items-center md:justify-end">
+            {/* Right — Monarch image (desktop only) */}
+            <div className="relative hidden flex-1 items-end justify-center md:flex md:items-center md:justify-end">
               <img
                 src="/images/monarch.png"
                 alt="Monarch butterfly"
-                className="pointer-events-none h-auto w-[80%] max-w-[480px] select-none object-contain md:w-full md:max-w-[560px]"
+                className="pointer-events-none h-auto w-full max-w-[560px] select-none object-contain"
                 draggable={false}
               />
             </div>
