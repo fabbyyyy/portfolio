@@ -1,11 +1,17 @@
 "use client";
 
-import { useEffect, useState, type RefObject } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import {
   motion,
   useReducedMotion,
   useAnimationControls,
 } from "framer-motion";
+import {
+  HERO_BG_LQIP,
+  HERO_BG_SRC,
+  HERO_BG_SRC_MOBILE,
+  markHeroBgReady,
+} from "@/components/heroBg";
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 
@@ -27,6 +33,37 @@ export function ScrollFadeHeroBg({
   const reduceMotion = useReducedMotion();
   const controls = useAnimationControls();
   const [scrollFade, setScrollFade] = useState(1);
+  const [loaded, setLoaded] = useState(false);
+  const heroImgRef = useRef<HTMLImageElement>(null);
+
+  /* The preload link often finishes the image before React attaches onLoad, so
+     `complete` has to be checked on mount as well or the reveal never fires. */
+  useEffect(() => {
+    const img = heroImgRef.current;
+    if (!img) return;
+
+    let cancelled = false;
+    const reveal = () => {
+      if (cancelled) return;
+      setLoaded(true);
+      markHeroBgReady();
+    };
+
+    const onDone = () => img.decode().then(reveal, reveal);
+
+    if (img.complete) {
+      onDone();
+    } else {
+      img.addEventListener("load", onDone);
+      img.addEventListener("error", reveal);
+    }
+
+    return () => {
+      cancelled = true;
+      img.removeEventListener("load", onDone);
+      img.removeEventListener("error", reveal);
+    };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -149,14 +186,31 @@ export function ScrollFadeHeroBg({
       className="pointer-events-none fixed inset-0 z-0 size-full will-change-[opacity]"
       style={{ opacity: scrollFade }}
     >
-      <motion.img
-        src="/images/hero-bg.png"
-        alt=""
-        className="absolute inset-0 size-full object-cover brightness-[1.18] saturate-[0.9] contrast-[1.02] will-change-transform"
-        draggable={false}
+      <motion.div
+        className="absolute inset-0 size-full brightness-[1.18] saturate-[0.9] contrast-[1.02] will-change-transform"
         initial={{ scale: reduceMotion ? 1 : 1.07 }}
         animate={controls}
-      />
+      >
+        {/* Blurred 32px stand-in: on screen from the first frame, so the full-size
+            painting can never be seen decoding band by band. */}
+        <div
+          className="absolute inset-0 size-full scale-105 bg-cover bg-center blur-[6px]"
+          style={{ backgroundImage: `url(${HERO_BG_LQIP})` }}
+          aria-hidden
+        />
+        <img
+          ref={heroImgRef}
+          src={HERO_BG_SRC}
+          srcSet={`${HERO_BG_SRC_MOBILE} 1280w, ${HERO_BG_SRC} 2400w`}
+          sizes="100vw"
+          alt=""
+          className="absolute inset-0 size-full object-cover transition-opacity duration-700 ease-out"
+          style={{ opacity: loaded ? 1 : 0 }}
+          draggable={false}
+          fetchPriority="high"
+          decoding="async"
+        />
+      </motion.div>
       <div className="absolute inset-0 bg-white/12" aria-hidden />
     </div>
   );

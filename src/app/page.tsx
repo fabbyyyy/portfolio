@@ -453,11 +453,17 @@ export default function Home() {
                 className={`mt-8 ${sectionBodyClass}`}
                 style={sectionBodySatoshi}
               >
-                I build software and interfaces I&apos;d actually want to open, and I&apos;m a little obsessive about the details. I&apos;m at
-                Tecnológico de Monterrey in Mexico, where art, cars, and music keep
-                me honest about craft. If the problem is worth solving, I&apos;ll go
-                deep until it feels right. Fair warning: my singing is still a work
-                in progress.
+                I build software and interfaces I&apos;d actually want to open,
+                and I&apos;m a little obsessive about the details. I&apos;m a
+                student at Tecnológico de Monterrey in Mexico, where art, cars,
+                and music keep me honest about craft. If the problem is worth
+                solving, I&apos;ll go deep until it feels right.
+                {/* The painting only renders from `md` up — crediting it on mobile
+                    would point at something that is not on screen. */}
+                <span className="max-md:hidden">
+                  {" "}
+                  The original painting was made by my mom :)
+                </span>
               </p>
             </div>
 

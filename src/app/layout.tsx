@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { fraunces, frauncesItalic, ppEditorial } from "./fonts";
 import "./globals.css";
+import { IntroLoader } from "@/components/IntroLoader";
+import { HERO_BG_SRC, HERO_BG_SRC_MOBILE } from "@/components/heroBg";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,10 +37,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Hero painting is the largest paint — start it before React hydrates */}
+        <link
+          rel="preload"
+          as="image"
+          href={HERO_BG_SRC}
+          imageSrcSet={`${HERO_BG_SRC_MOBILE} 1280w, ${HERO_BG_SRC} 2400w`}
+          imageSizes="100vw"
+          fetchPriority="high"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} ${frauncesItalic.variable} ${ppEditorial.variable} ${satoshi.variable} flex h-dvh flex-col overflow-hidden antialiased border border-transparent`}
         suppressHydrationWarning
       >
+        <IntroLoader />
         <div className="relative min-h-0 flex-1">{children}</div>
       </body>
     </html>
