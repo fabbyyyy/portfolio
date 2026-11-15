@@ -312,10 +312,10 @@ export default function Home() {
         <section
           id="hero"
           aria-label="Intro"
-          className="relative flex min-h-dvh shrink-0 snap-start flex-col overflow-hidden"
+          className="relative flex min-h-[80dvh] shrink-0 snap-start flex-col overflow-hidden sm:min-h-dvh"
         >
           <motion.div
-            className="pointer-events-none absolute inset-0 z-10"
+            className="pointer-events-none relative z-10 sm:absolute sm:inset-0"
             variants={heroContainerVariants}
             initial="hidden"
             animate="visible"
@@ -373,7 +373,7 @@ export default function Home() {
 
             {/* Mobile only — titles left / upper; bio + CTA trailing right */}
             <motion.div
-              className="absolute inset-x-[29px] top-[30%] flex max-w-full flex-col sm:hidden"
+              className="mx-[29px] flex max-w-full flex-col pb-6 pt-[30dvh] sm:hidden"
               variants={heroContainerVariants}
             >
               <div className="flex w-full flex-col items-start text-left">
@@ -442,12 +442,11 @@ export default function Home() {
 
         <section
           id="about"
-          className="relative shrink-0 snap-start overflow-hidden"
-          style={{ scrollMarginTop: "-6rem" }}
+          className="relative shrink-0 snap-start overflow-hidden md:scroll-mt-[-6rem]"
         >
-          <div className="mx-auto flex min-h-[calc(50dvh+7rem)] max-w-[1400px] flex-col items-stretch md:min-h-[calc(50dvh+8rem)] md:flex-row">
+          <div className="mx-auto flex max-w-[1400px] flex-col items-stretch md:min-h-[calc(50dvh+8rem)] md:flex-row">
             {/* Left — Text */}
-            <div className="flex flex-1 flex-col justify-center px-[29px] py-16 md:px-[clamp(2rem,5vw,5rem)] md:py-20">
+            <div className="flex flex-1 flex-col justify-center px-[29px] py-12 md:px-[clamp(2rem,5vw,5rem)] md:py-20">
               <h2
                 className="text-3xl font-semibold uppercase leading-[1.1] tracking-tight text-black sm:text-4xl md:text-5xl lg:text-6xl"
                 style={frauncesDisplay}
@@ -455,7 +454,7 @@ export default function Home() {
                 Hello, I Am Fabian
               </h2>
               <p
-                className={`mt-8 ${sectionBodyClass}`}
+                className={`mt-4 md:mt-8 ${sectionBodyClass}`}
                 style={sectionBodySatoshi}
               >
                 I build software and interfaces I&apos;d actually want to open,
@@ -486,10 +485,10 @@ export default function Home() {
 
         <section
           id="work"
-          className="min-h-dvh shrink-0 snap-start scroll-mt-[120px] px-[29px] pb-24 pt-8 sm:pt-10"
+          className="relative z-[1] min-h-dvh shrink-0 snap-start px-[29px] pb-16 pt-6 md:scroll-mt-[120px] md:pb-24 md:pt-10"
         >
           <h2
-            className="mb-12 flex max-w-prose items-center gap-2.5 text-3xl font-semibold leading-[1.1] sm:text-4xl"
+            className="mb-6 flex max-w-prose items-center gap-2.5 text-3xl font-semibold leading-[1.1] sm:text-4xl md:mb-12"
             style={frauncesDisplay}
           >
             {/* eslint-disable-next-line @next/next/no-img-element -- decorative size tied to heading */}
@@ -505,7 +504,7 @@ export default function Home() {
             Selected work
           </h2>
 
-          <div className="mx-auto flex max-w-[1200px] flex-col gap-20 md:gap-32">
+          <div className="mx-auto flex max-w-[1200px] flex-col gap-10 md:gap-32">
             {WORK_PROJECTS.map((project, index) => {
               const isEven = index % 2 === 0;
               return (
@@ -545,11 +544,11 @@ export default function Home() {
                   }}
                 >
                   <div
-                    className={`flex flex-col gap-8 md:flex-row md:items-center md:gap-16 ${isEven ? "" : "md:flex-row-reverse"
+                    className={`flex flex-col gap-3 md:flex-row md:items-center md:gap-16 ${isEven ? "" : "md:flex-row-reverse"
                       }`}
                   >
                     {/* Image Container: 55% width on desktop */}
-                    <div className="aspect-[16/10] w-full overflow-hidden md:w-[55%] shrink-0">
+                    <div className="h-32 w-full shrink-0 overflow-hidden md:aspect-[16/10] md:h-auto md:w-[55%]">
                       {/* eslint-disable-next-line @next/next/no-img-element -- CMS/local assets */}
                       <img
                         src={project.logo}
@@ -557,7 +556,7 @@ export default function Home() {
                         width={800}
                         height={500}
                         draggable={false}
-                        className="h-full w-full object-contain p-[12%] transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+                        className="h-full w-full object-contain px-[12%] transition-transform duration-700 ease-out group-hover:scale-[1.025] md:py-[12%]"
                         style={{
                           viewTransitionName: `project-image-${project.id}`
                         } as React.CSSProperties & { viewTransitionName?: string }}
