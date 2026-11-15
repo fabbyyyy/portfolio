@@ -11,6 +11,7 @@ import {
 import { NavStroke, type NavStrokeAsset } from "@/components/NavStroke";
 import { SocialNavLink } from "@/components/SocialNavLink";
 import { ScrollFadeHeroBg } from "@/components/ScrollFadeHeroBg";
+import { HERO_FADE_END_FRACTION } from "@/components/heroBg";
 import { useSectionActive } from "@/hooks/useSectionActive";
 import { frauncesItalic } from "./fonts";
 import { WORK_PROJECTS } from "@/data/projects";
@@ -72,7 +73,7 @@ export default function Home() {
   const reduceMotion = useReducedMotion();
   const mainRef = useRef<HTMLElement>(null);
   const [headerScrolled, setHeaderScrolled] = useState(false);
-  /** Past hero — mint sections use solid header (no frosted gradient / blur seam) */
+  /** Switch the header to the mint surface when the painting has faded out. */
   const [headerOnContentSurface, setHeaderOnContentSurface] = useState(false);
   const activeSection = useSectionActive(mainRef, SECTION_IDS);
 
@@ -89,17 +90,21 @@ export default function Home() {
 
       const hero = document.getElementById("hero");
       if (hero) {
-        const passedHero =
-          main.scrollTop >= Math.max(0, hero.offsetHeight - 2);
+        const paintingFaded =
+          main.scrollTop >= hero.offsetHeight * HERO_FADE_END_FRACTION;
         setHeaderOnContentSurface((prev) =>
-          prev !== passedHero ? passedHero : prev
+          prev !== paintingFaded ? paintingFaded : prev
         );
       }
     };
 
     onScroll();
     main.addEventListener("scroll", onScroll, { passive: true });
-    return () => main.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      main.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   /** Strip `#…` from URL (older bookmarks / pasted links) — nav uses `/` + programmatic scroll */
@@ -214,7 +219,7 @@ export default function Home() {
     <div className="relative h-full min-h-0 w-full text-black">
       <motion.header
         className={`pointer-events-auto fixed inset-x-0 top-0 z-20 flex w-full flex-row flex-wrap items-baseline justify-between gap-x-3 gap-y-2 px-[29px] pb-4 pt-[max(1.25rem,env(safe-area-inset-top))] text-black transition-[backdrop-filter,background-color] ease-out max-sm:flex-nowrap sm:pb-10 sm:pt-[30px] ${headerOnContentSurface && !headerHeroInitialLook
-          ? "bg-[#C2DDD8]/88 backdrop-blur-xl backdrop-saturate-150 [text-shadow:none]"
+          ? "bg-[#C2DDD8] [text-shadow:none]"
           : `bg-gradient-to-b from-[#C2DDD8]/72 via-[#C2DDD8]/38 to-transparent [text-shadow:0_1px_1px_rgba(255,255,255,0.35)] ${headerScrolled && !headerHeroInitialLook
             ? "backdrop-blur-xl backdrop-saturate-150"
             : "backdrop-blur-none"

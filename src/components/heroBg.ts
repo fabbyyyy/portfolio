@@ -1,5 +1,6 @@
 export const HERO_BG_SRC = "/images/hero-bg.jpg";
 export const HERO_BG_SRC_MOBILE = "/images/hero-bg-mobile.jpg";
+export const HERO_FADE_END_FRACTION = 0.75;
 
 /** 96px blurred JPEG of the painting — paints instantly so the full image never streams in visibly */
 export const HERO_BG_LQIP =

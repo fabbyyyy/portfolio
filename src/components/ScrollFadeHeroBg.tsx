@@ -10,13 +10,11 @@ import {
   HERO_BG_LQIP,
   HERO_BG_SRC,
   HERO_BG_SRC_MOBILE,
+  HERO_FADE_END_FRACTION,
   markHeroBgReady,
 } from "@/components/heroBg";
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
-
-/** Extra px so opacity hits 0 before any sub-pixel / layout mismatch */
-const FADE_END_SAFETY_PX = 48;
 
 /** Scroll distance over which the painting ramps back in before `#contact` */
 const CONTACT_FADE_IN_MIN_PX = 260;
@@ -74,22 +72,14 @@ export function ScrollFadeHeroBg({
       if (!main || cancelled) return;
 
       const update = () => {
-        const about = document.getElementById("about");
+        const hero = document.getElementById("hero");
         const contact = document.getElementById("contact");
-        if (!about || !contact) return;
+        if (!hero || !contact) return;
 
         const mainRect = main.getBoundingClientRect();
         const scrollTop = main.scrollTop;
 
-        const scrollMarginAbout =
-          parseFloat(getComputedStyle(about).scrollMarginTop) || 0;
-        const aboutTopInMain =
-          about.getBoundingClientRect().top - mainRect.top + scrollTop;
-
-        const fadeEnd = Math.max(
-          1,
-          aboutTopInMain - scrollMarginAbout - FADE_END_SAFETY_PX
-        );
+        const fadeEnd = Math.max(1, hero.offsetHeight * HERO_FADE_END_FRACTION);
 
         const scrollMarginContact =
           parseFloat(getComputedStyle(contact).scrollMarginTop) || 0;
