@@ -171,7 +171,7 @@ export default function WorkDetailsPage({ params }: PageProps) {
             )}
           </header>
 
-          <section className="mt-12 grid grid-cols-1 items-center gap-8 border-t border-black/15 pt-8 md:mt-20 md:grid-cols-2 md:gap-12 md:pt-12">
+          <section className="mt-12 grid grid-cols-1 items-center gap-8 md:mt-20 md:grid-cols-2 md:gap-12">
             <div className="max-w-prose" style={satoshi}>
               <h2 className="mb-4 text-2xl text-black/90" style={frauncesDisplay}>
                 About the project
@@ -186,7 +186,7 @@ export default function WorkDetailsPage({ params }: PageProps) {
           </section>
 
           {project.gallery?.map(({ heading, images }) => (
-            <section key={heading} className="mt-12 border-t border-black/15 pt-8 md:mt-20 md:pt-12">
+            <section key={heading} className="mt-12 md:mt-20">
               <h2 className="mb-5 text-2xl text-black/90 md:mb-8" style={frauncesDisplay}>
                 {heading}
               </h2>

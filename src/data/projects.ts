@@ -101,7 +101,7 @@ export const WORK_PROJECTS: WorkProject[] = [
     },
     gallery: [
       {
-        heading: "Insights, offices and attorneys",
+        heading: "More screenshots",
         images: [
           {
             src: "/images/projects/bustillosbarragan/screenshots/bb2.png",
