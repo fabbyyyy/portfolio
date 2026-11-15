@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
-import { WORK_PROJECTS } from "@/data/projects";
+import { WORK_PROJECTS, type ProjectScreenshot } from "@/data/projects";
 
 const frauncesDisplay = {
   fontFamily: "var(--font-fraunces), serif",
@@ -19,6 +19,22 @@ const satoshi = {
 } as const;
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
+
+function Screenshot({ image, sizes }: { image: ProjectScreenshot; sizes: string }) {
+  return (
+    <Image
+      src={image.src}
+      alt={image.alt}
+      width={image.width}
+      height={image.height}
+      loading="eager"
+      sizes={sizes}
+      className="block h-auto w-full rounded-lg border border-black/10"
+    />
+  );
+}
+
+const halfWidthSizes = "(max-width: 767px) calc(100vw - 58px), (max-width: 1258px) 46vw, 576px";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -62,17 +78,6 @@ export default function WorkDetailsPage({ params }: PageProps) {
   }
 
   const duration = (s: number) => (reduceMotion ? 0 : s);
-  const logo = (
-    /* eslint-disable-next-line @next/next/no-img-element -- local SVG logo */
-    <img
-      src={project.logo}
-      alt=""
-      draggable={false}
-      className="h-full w-full object-contain p-[12%]"
-      style={{ viewTransitionName: `project-image-${project.id}` }}
-    />
-  );
-
   return (
     <div className="relative h-full min-h-0 w-full bg-[#C2DDD8] text-black">
       {/* Dynamic details local scroll container */}
@@ -131,79 +136,67 @@ export default function WorkDetailsPage({ params }: PageProps) {
             </Link>
           </motion.div>
 
-          {(() => {
-            const projectIndex = WORK_PROJECTS.findIndex((p) => p.id === id);
-            const isEven = projectIndex % 2 === 0;
+          <header className="grid grid-cols-1 items-center gap-8 md:grid-cols-3 md:gap-12">
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: duration(0.65), ease: easeOut }}
+              className="max-w-sm"
+              style={satoshi}
+            >
+              <h1 className="sr-only">{project.title}</h1>
+              {/* eslint-disable-next-line @next/next/no-img-element -- local SVG logo */}
+              <img
+                src={project.logo}
+                alt=""
+                draggable={false}
+                className="mb-6 h-24 w-full max-w-[17rem] object-contain object-left"
+                style={{ viewTransitionName: `project-image-${project.id}` }}
+              />
+              <p className="text-xl leading-snug text-black/85 sm:text-2xl">
+                {project.summary}
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-black/65">
+                {project.subtitle}
+              </p>
+            </motion.div>
 
-            return (
-              <div
-                className={`flex flex-col gap-8 md:flex-row md:items-start md:gap-16 ${isEven ? "" : "md:flex-row-reverse"
-                  }`}
-              >
-                {/* Project Image: 55% width on desktop */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.98, y: 16 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ duration: duration(0.95), delay: 0.1, ease: easeOut }}
-                  className="relative aspect-[16/10] w-full overflow-hidden md:w-[55%] shrink-0"
-                >
-                  {logo}
-                </motion.div>
-
-                {/* Text & Content Block */}
-                <div className="min-w-0 flex-1">
-
-                  <h1 className="sr-only">{project.title}</h1>
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: duration(0.85), delay: 0.15, ease: easeOut }}
-                    className="mb-8 text-lg font-medium text-black/60 sm:text-xl"
-                    style={satoshi}
-                  >
-                    {project.subtitle}
-                  </motion.p>
-
-                  {/* Details / Split Metadata Grid */}
-                  <div className="border-t border-black/10 pt-8 flex flex-col gap-8">
-
-                    {/* Description block */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 12 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: duration(0.65), delay: 0.25, ease: easeOut }}
-                      className="flex flex-col gap-3"
-                      style={satoshi}
-                    >
-                      <h2 className="text-xs font-bold uppercase tracking-wider text-black/45">
-                        About the project
-                      </h2>
-                      <p className="text-lg leading-relaxed text-black/80 sm:text-xl font-normal whitespace-pre-line">
-                        {project.fullDetails}
-                      </p>
-                    </motion.div>
-
-                  </div>
-                </div>
-              </div>
-            );
-          })()}
-
-          {project.screenshots && (
-            <section aria-label="Project screenshots" className="mt-12 flex flex-col items-center gap-6 md:mt-20 md:gap-10">
-              {project.screenshots.map((screenshot) => (
-                <Image
-                  key={screenshot.src}
-                  src={screenshot.src}
-                  alt={screenshot.alt}
-                  width={screenshot.width}
-                  height={screenshot.height}
-                  sizes={`(max-width: ${Math.min(screenshot.width, 1200) + 58}px) calc(100vw - 58px), ${Math.min(screenshot.width, 1200)}px`}
-                  className="h-auto max-w-full"
+            {project.cover && (
+              <div className="md:col-span-2">
+                <Screenshot
+                  image={project.cover}
+                  sizes="(max-width: 767px) calc(100vw - 58px), (max-width: 1258px) 64vw, 784px"
                 />
-              ))}
+              </div>
+            )}
+          </header>
+
+          <section className="mt-12 grid grid-cols-1 items-center gap-8 border-t border-black/15 pt-8 md:mt-20 md:grid-cols-2 md:gap-12 md:pt-12">
+            <div className="max-w-prose" style={satoshi}>
+              <h2 className="mb-4 text-2xl text-black/90" style={frauncesDisplay}>
+                About the project
+              </h2>
+              <p className="whitespace-pre-line text-base leading-relaxed text-black/80 sm:text-lg">
+                {project.fullDetails}
+              </p>
+            </div>
+            {project.overviewImage && (
+              <Screenshot image={project.overviewImage} sizes={halfWidthSizes} />
+            )}
+          </section>
+
+          {project.gallery?.map(({ heading, images }) => (
+            <section key={heading} className="mt-12 border-t border-black/15 pt-8 md:mt-20 md:pt-12">
+              <h2 className="mb-5 text-2xl text-black/90 md:mb-8" style={frauncesDisplay}>
+                {heading}
+              </h2>
+              <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-2 md:gap-8">
+                {images.map((image) => (
+                  <Screenshot key={image.src} image={image} sizes={halfWidthSizes} />
+                ))}
+              </div>
             </section>
-          )}
+          ))}
         </div>
       </main>
     </div>
