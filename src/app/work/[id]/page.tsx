@@ -79,17 +79,13 @@ export default function WorkDetailsPage({ params }: PageProps) {
 
   const duration = (s: number) => (reduceMotion ? 0 : s);
   return (
-    <div className="relative h-full min-h-0 w-full bg-[#C2DDD8] text-black">
-      {/* Dynamic details local scroll container */}
-      <main className="relative z-[1] h-full min-h-0 w-full overflow-x-hidden overflow-y-auto overscroll-y-contain scroll-smooth px-[29px] pb-24 pt-[max(1.25rem,env(safe-area-inset-top))]">
-        <div className="mx-auto max-w-[1200px] pt-12 sm:pt-20">
-
-          {/* Back Button with Micro-Animation */}
+    <div className="relative flex h-full min-h-0 w-full flex-col bg-[#C2DDD8] text-black">
+      <nav aria-label="Project navigation" className="shrink-0 px-[29px] pb-2 pt-[max(0.75rem,env(safe-area-inset-top))]">
+        <div className="mx-auto max-w-[1200px]">
           <motion.div
             initial={{ opacity: 0, x: -8 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: duration(0.65), ease: easeOut }}
-            className="mb-10 sm:mb-16"
           >
             <Link
               href="/"
@@ -117,7 +113,7 @@ export default function WorkDetailsPage({ params }: PageProps) {
                   router.push(targetUrl);
                 }
               }}
-              className="group inline-flex items-center gap-3 text-sm font-bold lowercase tracking-widest text-black/70 transition-colors hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-black/35"
+              className="group inline-flex min-h-11 items-center gap-3 text-sm font-bold lowercase tracking-widest text-black/70 transition-colors hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-black/35"
               style={satoshi}
             >
               <motion.span
@@ -135,7 +131,11 @@ export default function WorkDetailsPage({ params }: PageProps) {
               </span>
             </Link>
           </motion.div>
+        </div>
+      </nav>
 
+      <main className="min-h-0 w-full flex-1 overflow-x-hidden overflow-y-auto overscroll-y-contain scroll-smooth px-[29px] pb-24">
+        <div className="mx-auto max-w-[1200px] pt-8 sm:pt-12">
           <header className="grid grid-cols-1 items-center gap-8 md:grid-cols-3 md:gap-12">
             <motion.div
               initial={{ opacity: 0, y: 12 }}
