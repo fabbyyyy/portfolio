@@ -549,11 +549,11 @@ export default function Home() {
                       }`}
                   >
                     {/* Image Container: 55% width on desktop */}
-                    <div className="aspect-[16/10] w-full overflow-hidden bg-black/[0.04] md:w-[55%] shrink-0">
+                    <div className="aspect-[16/10] w-full overflow-hidden md:w-[55%] shrink-0">
                       {/* eslint-disable-next-line @next/next/no-img-element -- CMS/local assets */}
                       <img
                         src={project.logo}
-                        alt={project.imageAlt}
+                        alt={project.title}
                         width={800}
                         height={500}
                         draggable={false}

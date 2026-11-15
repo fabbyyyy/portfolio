@@ -61,6 +61,16 @@ export default function WorkDetailsPage({ params }: PageProps) {
   }
 
   const duration = (s: number) => (reduceMotion ? 0 : s);
+  const logo = (
+    /* eslint-disable-next-line @next/next/no-img-element -- local SVG logo */
+    <img
+      src={project.logo}
+      alt=""
+      draggable={false}
+      className="h-full w-full object-contain p-[12%]"
+      style={{ viewTransitionName: `project-image-${project.id}` }}
+    />
+  );
 
   return (
     <div className="relative h-full min-h-0 w-full bg-[#C2DDD8] text-black">
@@ -134,68 +144,34 @@ export default function WorkDetailsPage({ params }: PageProps) {
                   initial={{ opacity: 0, scale: 0.98, y: 16 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   transition={{ duration: duration(0.95), delay: 0.1, ease: easeOut }}
-                  className="relative aspect-[16/10] w-full overflow-hidden bg-black/[0.04] shadow-sm md:w-[55%] shrink-0"
+                  className="relative aspect-[16/10] w-full overflow-hidden md:w-[55%] shrink-0"
                 >
                   {project.website ? (
                     <a
                       href={project.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group/img block h-full w-full relative overflow-hidden bg-black"
-                      title="Visit published website"
+                      className="block h-full w-full transition-opacity hover:opacity-80"
+                      aria-label={`Visit the ${project.title} website`}
                     >
-                      {/* eslint-disable-next-line @next/next/no-img-element -- premium asset */}
-                      <img
-                        src={project.image}
-                        alt={project.imageAlt}
-                        className="h-full w-full object-cover transition-opacity duration-300 group-hover/img:opacity-80"
-                        draggable={false}
-                        style={{
-                          viewTransitionName: `project-image-${project.id}`
-                        } as React.CSSProperties & { viewTransitionName?: string }}
-                      />
+                      {logo}
                     </a>
-                  ) : (
-                    /* eslint-disable-next-line @next/next/no-img-element -- premium asset */
-                    <img
-                      src={project.image}
-                      alt={project.imageAlt}
-                      className="h-full w-full object-cover"
-                      draggable={false}
-                      style={{
-                        viewTransitionName: `project-image-${project.id}`
-                      } as React.CSSProperties & { viewTransitionName?: string }}
-                    />
-                  )}
+                  ) : logo}
                 </motion.div>
 
                 {/* Text & Content Block */}
                 <div className="min-w-0 flex-1">
 
-                  {/* Title Block */}
-                  <div className="mb-8">
-                    <motion.h1
-                      initial={{ opacity: 0, y: 24 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: duration(0.85), ease: easeOut }}
-                      className="text-4xl font-semibold uppercase leading-[1.05] tracking-tight text-black sm:text-5xl md:text-6xl"
-                      style={{
-                        ...frauncesDisplay,
-                        viewTransitionName: `project-title-${project.id}`
-                      } as React.CSSProperties & { viewTransitionName?: string }}
-                    >
-                      {project.title}
-                    </motion.h1>
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: duration(0.85), delay: 0.15, ease: easeOut }}
-                      className="mt-4 text-lg font-medium text-black/50 sm:text-xl"
-                      style={satoshi}
-                    >
-                      {project.subtitle}
-                    </motion.p>
-                  </div>
+                  <h1 className="sr-only">{project.title}</h1>
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: duration(0.85), delay: 0.15, ease: easeOut }}
+                    className="mb-8 text-lg font-medium text-black/60 sm:text-xl"
+                    style={satoshi}
+                  >
+                    {project.subtitle}
+                  </motion.p>
 
                   {/* Details / Split Metadata Grid */}
                   <div className="border-t border-black/10 pt-8 flex flex-col gap-8">
@@ -208,9 +184,9 @@ export default function WorkDetailsPage({ params }: PageProps) {
                       className="flex flex-col gap-3"
                       style={satoshi}
                     >
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-black/45">
+                      <h2 className="text-xs font-bold uppercase tracking-wider text-black/45">
                         About the project
-                      </h4>
+                      </h2>
                       <p className="text-lg leading-relaxed text-black/80 sm:text-xl font-normal whitespace-pre-line">
                         {project.fullDetails}
                       </p>

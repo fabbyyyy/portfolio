@@ -1,8 +1,6 @@
 export type WorkProject = {
   id: string;
-  image: string;
   logo: string;
-  imageAlt: string;
   title: string;
   subtitle: string;
   summary: string;
@@ -14,9 +12,7 @@ export type WorkProject = {
 export const WORK_PROJECTS: WorkProject[] = [
   {
     id: "lumen",
-    image: "/images/projects/lumen.png",
     logo: "/images/projects/lumen.svg",
-    imageAlt: "Lumen",
     title: "Lumen",
     subtitle: "ui/ux design, brand design, web development",
     summary: "Sprint planning and task tracking for software teams.",
@@ -25,9 +21,7 @@ export const WORK_PROJECTS: WorkProject[] = [
   },
   {
     id: "caritas-mty",
-    image: "/images/projects/caritas.png",
     logo: "/images/projects/caritas.svg",
-    imageAlt: "Caritas",
     title: "Cáritas de Monterrey",
     subtitle: "ui/ux design, swift development",
     summary: "An iOS app for fundraising and managing donations.",
@@ -36,9 +30,7 @@ export const WORK_PROJECTS: WorkProject[] = [
   },
   {
     id: "vantage",
-    image: "/images/projects/vantage.png",
     logo: "/images/projects/vantage.svg",
-    imageAlt: "Vantage",
     title: "Vantage",
     subtitle: "ui/ux design, brand design, web development",
     summary: "A website for a web design and hosting agency.",
