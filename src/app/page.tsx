@@ -547,12 +547,12 @@ export default function Home() {
                     <div className="aspect-[16/10] w-full overflow-hidden bg-black/[0.04] md:w-[55%] shrink-0">
                       {/* eslint-disable-next-line @next/next/no-img-element -- CMS/local assets */}
                       <img
-                        src={project.image}
+                        src={project.logo}
                         alt={project.imageAlt}
                         width={800}
                         height={500}
                         draggable={false}
-                        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+                        className="h-full w-full object-contain p-[12%] transition-transform duration-700 ease-out group-hover:scale-[1.025]"
                         style={{
                           viewTransitionName: `project-image-${project.id}`
                         } as React.CSSProperties & { viewTransitionName?: string }}
@@ -561,20 +561,17 @@ export default function Home() {
 
                     {/* Text Details Container */}
                     <div className="min-w-0 flex-1">
-                      <h3
-                        className="text-4xl font-semibold uppercase leading-[1.05] tracking-tight text-black transition-colors duration-300 group-hover:text-black/70 sm:text-5xl md:text-6xl"
-                        style={{
-                          ...frauncesDisplay,
-                          viewTransitionName: `project-title-${project.id}`
-                        } as React.CSSProperties & { viewTransitionName?: string }}
-                      >
-                        {project.title}
-                      </h3>
                       <p
-                        className="mt-4 text-lg font-medium text-black/50 sm:text-xl"
+                        className={sectionBodyClass}
                         style={sectionBodySatoshi}
                       >
-                        {project.subtitle}
+                        {project.summary}
+                      </p>
+                      <p
+                        className="mt-2 text-base font-medium text-black/60 sm:text-lg"
+                        style={sectionBodySatoshi}
+                      >
+                        {project.stack}
                       </p>
                     </div>
                   </div>
