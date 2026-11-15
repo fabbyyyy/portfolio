@@ -1,6 +1,7 @@
 "use client";
 
 import { use, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
@@ -146,17 +147,7 @@ export default function WorkDetailsPage({ params }: PageProps) {
                   transition={{ duration: duration(0.95), delay: 0.1, ease: easeOut }}
                   className="relative aspect-[16/10] w-full overflow-hidden md:w-[55%] shrink-0"
                 >
-                  {project.website ? (
-                    <a
-                      href={project.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block h-full w-full transition-opacity hover:opacity-80"
-                      aria-label={`Visit the ${project.title} website`}
-                    >
-                      {logo}
-                    </a>
-                  ) : logo}
+                  {logo}
                 </motion.div>
 
                 {/* Text & Content Block */}
@@ -197,6 +188,22 @@ export default function WorkDetailsPage({ params }: PageProps) {
               </div>
             );
           })()}
+
+          {project.screenshots && (
+            <section aria-label="Project screenshots" className="mt-12 flex flex-col items-center gap-6 md:mt-20 md:gap-10">
+              {project.screenshots.map((screenshot) => (
+                <Image
+                  key={screenshot.src}
+                  src={screenshot.src}
+                  alt={screenshot.alt}
+                  width={screenshot.width}
+                  height={screenshot.height}
+                  sizes={`(max-width: ${Math.min(screenshot.width, 1200) + 58}px) calc(100vw - 58px), ${Math.min(screenshot.width, 1200)}px`}
+                  className="h-auto max-w-full"
+                />
+              ))}
+            </section>
+          )}
         </div>
       </main>
     </div>
