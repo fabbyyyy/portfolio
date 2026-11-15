@@ -183,11 +183,11 @@ export function ScrollFadeHeroBg({
 
   return (
     <div
-      className="pointer-events-none fixed inset-0 z-0 size-full will-change-[opacity]"
+      className="pointer-events-none fixed inset-0 z-0 size-full overflow-hidden bg-white will-change-[opacity]"
       style={{ opacity: scrollFade }}
     >
       <motion.div
-        className="absolute inset-0 size-full brightness-[1.18] saturate-[0.9] contrast-[1.02] will-change-transform"
+        className="absolute inset-x-0 top-[clamp(2rem,6dvh,4rem)] size-full mask-[linear-gradient(to_bottom,transparent,black_2rem)] brightness-[1.18] saturate-[0.9] contrast-[1.02] will-change-transform"
         initial={{ scale: reduceMotion ? 1 : 1.07 }}
         animate={controls}
       >

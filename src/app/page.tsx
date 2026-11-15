@@ -440,9 +440,9 @@ export default function Home() {
           className="relative shrink-0 snap-start overflow-hidden"
           style={{ scrollMarginTop: "-6rem" }}
         >
-          <div className="mx-auto flex min-h-dvh max-w-[1400px] flex-col items-stretch md:flex-row">
+          <div className="mx-auto flex min-h-[calc(50dvh+7rem)] max-w-[1400px] flex-col items-stretch md:min-h-[calc(50dvh+8rem)] md:flex-row">
             {/* Left — Text */}
-            <div className="flex flex-1 flex-col justify-center px-[29px] py-24 md:px-[clamp(2rem,5vw,5rem)] md:py-32">
+            <div className="flex flex-1 flex-col justify-center px-[29px] py-16 md:px-[clamp(2rem,5vw,5rem)] md:py-20">
               <h2
                 className="text-3xl font-semibold uppercase leading-[1.1] tracking-tight text-black sm:text-4xl md:text-5xl lg:text-6xl"
                 style={frauncesDisplay}
@@ -472,7 +472,7 @@ export default function Home() {
               <img
                 src="/images/monarch.png"
                 alt="Monarch butterfly"
-                className="pointer-events-none h-auto w-full max-w-[560px] select-none object-contain"
+                className="pointer-events-none h-auto max-h-[calc(50dvh+8rem)] w-full max-w-[560px] select-none object-contain"
                 draggable={false}
               />
             </div>
