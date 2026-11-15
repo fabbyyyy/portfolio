@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useEffect } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -20,17 +20,29 @@ const satoshi = {
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 
-function Screenshot({ image, sizes }: { image: ProjectScreenshot; sizes: string }) {
+function Screenshot({ image, sizes, onOpen }: {
+  image: ProjectScreenshot;
+  sizes: string;
+  onOpen: (image: ProjectScreenshot, trigger: HTMLButtonElement) => void;
+}) {
   return (
-    <Image
-      src={image.src}
-      alt={image.alt}
-      width={image.width}
-      height={image.height}
-      loading="eager"
-      sizes={sizes}
-      className="block h-auto w-full rounded-lg border border-black/10"
-    />
+    <button
+      type="button"
+      aria-label={`Enlarge screenshot: ${image.alt}`}
+      aria-haspopup="dialog"
+      onClick={(event) => onOpen(image, event.currentTarget)}
+      className="block w-full cursor-zoom-in rounded-lg text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black"
+    >
+      <Image
+        src={image.src}
+        alt=""
+        width={image.width}
+        height={image.height}
+        loading="eager"
+        sizes={sizes}
+        className="block h-auto w-full rounded-lg border border-black/10"
+      />
+    </button>
   );
 }
 
@@ -44,6 +56,15 @@ export default function WorkDetailsPage({ params }: PageProps) {
   const { id } = use(params);
   const router = useRouter();
   const reduceMotion = useReducedMotion();
+  const screenshotDialog = useRef<HTMLDialogElement>(null);
+  const screenshotTrigger = useRef<HTMLButtonElement>(null);
+  const [selectedScreenshot, setSelectedScreenshot] = useState<ProjectScreenshot | null>(null);
+
+  function openScreenshot(image: ProjectScreenshot, trigger: HTMLButtonElement) {
+    screenshotTrigger.current = trigger;
+    setSelectedScreenshot(image);
+    screenshotDialog.current?.showModal();
+  }
 
   // Resolve the page transition promise on mount
   useEffect(() => {
@@ -166,6 +187,7 @@ export default function WorkDetailsPage({ params }: PageProps) {
                 <Screenshot
                   image={project.cover}
                   sizes="(max-width: 767px) calc(100vw - 58px), (max-width: 1258px) 64vw, 784px"
+                  onOpen={openScreenshot}
                 />
               </div>
             )}
@@ -181,7 +203,7 @@ export default function WorkDetailsPage({ params }: PageProps) {
               </p>
             </div>
             {project.overviewImage && (
-              <Screenshot image={project.overviewImage} sizes={halfWidthSizes} />
+              <Screenshot image={project.overviewImage} sizes={halfWidthSizes} onOpen={openScreenshot} />
             )}
           </section>
 
@@ -192,13 +214,46 @@ export default function WorkDetailsPage({ params }: PageProps) {
               </h2>
               <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-2 md:gap-8">
                 {images.map((image) => (
-                  <Screenshot key={image.src} image={image} sizes={halfWidthSizes} />
+                  <Screenshot key={image.src} image={image} sizes={halfWidthSizes} onOpen={openScreenshot} />
                 ))}
               </div>
             </section>
           ))}
         </div>
       </main>
+      <dialog
+        ref={screenshotDialog}
+        aria-label="Screenshot preview"
+        onClose={() => {
+          setSelectedScreenshot(null);
+          screenshotTrigger.current?.focus({ preventScroll: true });
+        }}
+        onPointerDown={(event) => {
+          if (event.target === event.currentTarget) event.currentTarget.close();
+        }}
+        className="fixed inset-0 m-auto max-h-none max-w-[calc(100vw-2rem)] overflow-visible bg-transparent text-white backdrop:bg-black/85"
+      >
+        <div className="flex flex-col items-end gap-2">
+          <button
+            type="button"
+            aria-label="Close screenshot"
+            onClick={() => screenshotDialog.current?.close()}
+            className="grid size-11 cursor-pointer place-items-center rounded-full bg-white/15 text-2xl leading-none hover:bg-white/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+          {selectedScreenshot && (
+            <Image
+              src={selectedScreenshot.src}
+              alt={selectedScreenshot.alt}
+              width={selectedScreenshot.width}
+              height={selectedScreenshot.height}
+              sizes="calc(100vw - 2rem)"
+              className="h-auto max-h-[calc(100dvh-6rem)] w-auto max-w-full rounded-lg object-contain"
+            />
+          )}
+        </div>
+      </dialog>
     </div>
   );
 }
